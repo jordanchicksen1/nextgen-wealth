@@ -18,17 +18,21 @@ export default function ProfileSetup() {
     setRiskTolerance,
     goal,
     setGoal,
+    email,
+    setEmail,
+    password,
+    setPassword,
   } = useFinancial();
 
   const [error, setError] = useState("");
 
   const handleSubmit = () => {
-    if (!name || !age || !income) {
+   if (!email ||!password ||!name ||!age ||!income) {
       setError("Please complete all required fields.");
       return;
     }
 
-    navigate("/home");
+   navigate("/");
   };
 
   return (
@@ -43,6 +47,30 @@ export default function ProfileSetup() {
         <div className="card-header">
           Personal Information
         </div>
+
+        <div className="profile-field">
+        <label>Email</label>
+
+  <input
+    type="email"
+    value={email}
+    onChange={(e) =>
+      setEmail(e.target.value)
+    }
+  />
+</div>
+
+<div className="profile-field">
+  <label>Password</label>
+
+  <input
+    type="password"
+    value={password}
+    onChange={(e) =>
+      setPassword(e.target.value)
+    }
+  />
+</div>
 
         <div className="profile-field">
           <label>Name</label>
@@ -109,7 +137,7 @@ export default function ProfileSetup() {
           className="profile-button"
           onClick={handleSubmit}
         >
-          Continue
+          Create Account
         </button>
 
       </div>

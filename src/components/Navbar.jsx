@@ -10,7 +10,7 @@ export default function Navbar() {
         <h3 className="logo">NextGen</h3>
 
         <div className="nav-links">
-          <Link className={location.pathname === "/" ? "active" : ""} to="/">
+          <Link className={location.pathname === "/home" ? "active" : ""} to="/home">
             Home
           </Link>
 

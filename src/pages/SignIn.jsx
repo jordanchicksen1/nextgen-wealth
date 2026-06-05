@@ -1,9 +1,34 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "./profile.css";
 
 export default function SignIn() {
   const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [error, setError] = useState("");
+
+  const handleLogin = () => {
+    const savedEmail =
+      localStorage.getItem("email");
+
+    const savedPassword =
+      localStorage.getItem("password");
+
+    if (
+      email === savedEmail &&
+      password === savedPassword
+    ) {
+      navigate("/home");
+    } else {
+      setError(
+        "Invalid email or password."
+      );
+    }
+  };
 
   return (
     <div className="profile-page">
@@ -15,16 +40,53 @@ export default function SignIn() {
       <div className="profile-card">
 
         <div className="card-header">
-          Welcome
+          Sign In
         </div>
+
+        <div className="profile-field">
+          <label>Email</label>
+
+          <input
+            type="email"
+            value={email}
+            onChange={(e) =>
+              setEmail(e.target.value)
+            }
+          />
+        </div>
+
+        <div className="profile-field">
+          <label>Password</label>
+
+          <input
+            type="password"
+            value={password}
+            onChange={(e) =>
+              setPassword(e.target.value)
+            }
+          />
+        </div>
+
+        {error && (
+          <p className="profile-error">
+            {error}
+          </p>
+        )}
+
+        <button
+          className="profile-button"
+          onClick={handleLogin}
+        >
+          Sign In
+        </button>
 
         <p
           style={{
             textAlign: "center",
-            marginBottom: "20px",
+            marginTop: "15px",
           }}
         >
-          Begin your financial journey.
+          Don't have an account?
         </p>
 
         <button
@@ -33,7 +95,7 @@ export default function SignIn() {
             navigate("/setup-profile")
           }
         >
-          Create Profile
+          Sign Up
         </button>
 
       </div>
