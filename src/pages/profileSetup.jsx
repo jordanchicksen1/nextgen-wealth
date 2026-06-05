@@ -1,199 +1,87 @@
-import { useNavigate } from "react-router-dom";
-import { useFinancial } from "../context/FinancialContext";
-import { useState } from "react";
+import {createContext, useContext, useState, useEffect} from "react";
 
-import "./profile.css";
+const FinancialContext = createContext();
 
-export default function ProfileSetup() {
-  const navigate = useNavigate();
+export function FinancialProvider({ children }) {
+  const [email, setEmail] = useState(localStorage.getItem("email") || "");
+  const [password, setPassword] = useState(localStorage.getItem("password") || "");
+  const [name, setName] = useState(localStorage.getItem("name") || "");
+  const [age, setAge] = useState(localStorage.getItem("age") || "");
+  const [income, setIncome] = useState(Number(localStorage.getItem("income")) || 0);
+  const [expenses, setExpenses] = useState({
+    Discretionary: 0,
+    Groceries: 0,
+    Utilities: 0,
+    Transport: 0,
+  });
 
-  const {
-    name,
-    setName,
-    age,
-    setAge,
-    income,
-    setIncome,
-    riskTolerance,
-    setRiskTolerance,
-    goal,
-    setGoal,
-    email,
-    setEmail,
-    password,
-    setPassword,
-  } = useFinancial();
+  const [riskTolerance, setRiskTolerance] = useState(localStorage.getItem("riskTolerance") || "Moderate");
+  const [goal, setGoal] = useState(localStorage.getItem("goal") || "Property");
 
-  const [error, setError] = useState("");
+useEffect(() => {
+  localStorage.setItem("name", name);
+}, [name]);
 
-  const [showPassword, setShowPassword] = useState(false);
+useEffect(() => {
+  localStorage.setItem("age", age);
+}, [age]);
 
-  const handleSubmit = () => {
-  if (
-    !email ||
-    !password ||
-    !name ||
-    !age ||
-    !income
-  ) {
-    setError("Please complete all required fields.");
-    return;
-  }
+useEffect(() => {
+  localStorage.setItem("income", income);
+}, [income]);
 
+useEffect(() => {
   localStorage.setItem(
-    "user",
-    JSON.stringify({
-      email,
-      password,
-      name,
-      age,
-      income,
-      riskTolerance,
-      goal,
-    })
+    "riskTolerance",
+    riskTolerance
   );
+}, [riskTolerance]);
 
-  navigate("/");
-};
+useEffect(() => {
+  localStorage.setItem("goal", goal);
+}, [goal]);
+
+useEffect(() => {
+  localStorage.setItem("email", email);
+}, [email]);
+
+useEffect(() => {
+  localStorage.setItem("password", password);
+}, [password]);
 
   return (
-    <div className="profile-page">
+    <FinancialContext.Provider
+      value={{
+        email,
+        setEmail,
 
-      <div className="header">
-        Create Your Profile
-      </div>
+        password,
+        setPassword,
 
-<div className="profile-intro">
+        name,
+        setName,
 
-  <h2>🚀 Start Your Financial Journey</h2>
+        age,
+        setAge,
 
-  <p>
-    Create a profile so NextGen Wealth can
-    personalise simulations, strategy tracks
-    and recommendations based on your goals.
-  </p>
+        income,
+        setIncome,
 
-</div>
+        expenses,
+        setExpenses,
 
+        riskTolerance,
+        setRiskTolerance,
 
-      <div className="profile-card">
-
-        <div className="card-header">
-          Personal Information
-        </div>
-
-        <div className="profile-field">
-        <label>📧 Email</label>
-
-  <input
-    type="email"
-    value={email}
-    onChange={(e) =>
-      setEmail(e.target.value)
-    }
-  />
-</div>
-
-<div className="profile-field">
-  <label>🔒 Password</label>
-
-  <div className="password-wrapper">
-
-    <input
-      type={
-        showPassword
-          ? "text"
-          : "password"
-      }
-      value={password}
-      onChange={(e) =>
-        setPassword(e.target.value)
-      }
-    />
-
-    <button
-      type="button"
-      className="eye-button"
-      onClick={() =>
-        setShowPassword(!showPassword)
-      }
+        goal,
+        setGoal,
+      }}
     >
-      {showPassword ? "🙈" : "👁️"}
-    </button>
-
-  </div>
-</div>
-
-        <div className="profile-field">
-          <label>👤 Name</label>
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-
-        <div className="profile-field">
-          <label>🎂 Age</label>
-          <input
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-          />
-        </div>
-
-        <div className="profile-field">
-          <label>💰 Monthly Income</label>
-          <input
-            value={income === 0 ? "" : income}
-            onChange={(e) =>
-              setIncome(Number(e.target.value) || 0)
-            }
-          />
-        </div>
-
-        <div className="profile-field">
-          <label>🛡️ Risk Tolerance</label>
-
-          <select
-            value={riskTolerance}
-            onChange={(e) =>
-              setRiskTolerance(e.target.value)
-            }
-          >
-            <option>🛡️ Conservative</option>
-            <option>⚖️ Moderate</option>
-            <option>🚀 Aggressive</option>
-          </select>
-        </div>
-
-        <div className="profile-field">
-          <label>🎯 Primary Goal</label>
-
-          <select
-            value={goal}
-            onChange={(e) => setGoal(e.target.value)}
-          >
-            <option>🏠 Property</option>
-            <option>💰 Retirement</option>
-            <option>🧰 Emergency Fund</option>
-            <option>🌍 Wealth Building</option>
-          </select>
-        </div>
-
-        {error && (
-          <p className="profile-error">
-            {error}
-          </p>
-        )}
-
-        <button
-          className="profile-button"
-          onClick={handleSubmit}
-        >
-          Create Account
-        </button>
-
-      </div>
-
-    </div>
+      {children}
+    </FinancialContext.Provider>
   );
+}
+
+export function useFinancial() {
+  return useContext(FinancialContext);
 }

@@ -1,129 +1,87 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {createContext, useContext, useState, useEffect} from "react";
 
-import "./profile.css";
+const FinancialContext = createContext();
 
-export default function SignIn() {
-  const navigate = useNavigate();
+export function FinancialProvider({ children }) {
+  const [email, setEmail] = useState(localStorage.getItem("email") || "");
+  const [password, setPassword] = useState(localStorage.getItem("password") || "");
+  const [name, setName] = useState(localStorage.getItem("name") || "");
+  const [age, setAge] = useState(localStorage.getItem("age") || "");
+  const [income, setIncome] = useState(Number(localStorage.getItem("income")) || 0);
+  const [expenses, setExpenses] = useState({
+    Discretionary: 0,
+    Groceries: 0,
+    Utilities: 0,
+    Transport: 0,
+  });
 
-  const [email, setEmail] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [riskTolerance, setRiskTolerance] = useState(localStorage.getItem("riskTolerance") || "Moderate");
+  const [goal, setGoal] = useState(localStorage.getItem("goal") || "Property");
 
-  const handleLogin = () => {
-    const savedEmail =
-      localStorage.getItem("email");
+useEffect(() => {
+  localStorage.setItem("name", name);
+}, [name]);
 
-    const savedPassword =
-      localStorage.getItem("password");
+useEffect(() => {
+  localStorage.setItem("age", age);
+}, [age]);
 
-    if (
-      email === savedEmail &&
-      password === savedPassword
-    ) {
-      navigate("/home");
-    } else {
-      setError(
-        "Invalid email or password."
-      );
-    }
-  };
+useEffect(() => {
+  localStorage.setItem("income", income);
+}, [income]);
+
+useEffect(() => {
+  localStorage.setItem(
+    "riskTolerance",
+    riskTolerance
+  );
+}, [riskTolerance]);
+
+useEffect(() => {
+  localStorage.setItem("goal", goal);
+}, [goal]);
+
+useEffect(() => {
+  localStorage.setItem("email", email);
+}, [email]);
+
+useEffect(() => {
+  localStorage.setItem("password", password);
+}, [password]);
 
   return (
-    <div className="profile-page">
+    <FinancialContext.Provider
+      value={{
+        email,
+        setEmail,
 
-      <div className="header">
-        NextGen Wealth
-      </div>
+        password,
+        setPassword,
 
-      <div className="profile-card">
+        name,
+        setName,
 
-        <div className="card-header">
-          Sign In
-        </div>
+        age,
+        setAge,
 
-        <p className="signin-text">
-        📈 Continue your financial journey and
-        access your personalised strategy tracks
-        and simulations.
-        </p>
+        income,
+        setIncome,
 
-        <div className="profile-field">
-          <label>Email</label>
+        expenses,
+        setExpenses,
 
-          <input
-            type="email"
-            value={email}
-            onChange={(e) =>
-              setEmail(e.target.value)
-            }
-          />
-        </div>
+        riskTolerance,
+        setRiskTolerance,
 
-        <div className="profile-field">
-  <label>Password</label>
-
-  <div className="password-wrapper">
-
-    <input
-      type={
-        showPassword
-          ? "text"
-          : "password"
-      }
-      value={password}
-      onChange={(e) =>
-        setPassword(e.target.value)
-      }
-    />
-
-    <button
-      type="button"
-      className="eye-button"
-      onClick={() =>
-        setShowPassword(!showPassword)
-      }
+        goal,
+        setGoal,
+      }}
     >
-      {showPassword ? "🙈" : "👁️"}
-    </button>
-
-  </div>
-</div>
-
-        {error && (
-          <p className="profile-error">
-            {error}
-          </p>
-        )}
-
-        <button
-          className="profile-button"
-          onClick={handleLogin}
-        >
-          Sign In
-        </button>
-
-        <p
-          style={{
-            textAlign: "center",
-            marginTop: "15px",
-          }}
-        >
-          Don't have an account?
-        </p>
-
-        <button
-          className="profile-button"
-          onClick={() =>
-            navigate("/setup-profile")
-          }
-        >
-          Sign Up
-        </button>
-
-      </div>
-
-    </div>
+      {children}
+    </FinancialContext.Provider>
   );
+}
+
+export function useFinancial() {
+  return useContext(FinancialContext);
 }
