@@ -1,87 +1,147 @@
-import {createContext, useContext, useState, useEffect} from "react";
+import { useNavigate } from "react-router-dom";
+import { useFinancial } from "../context/FinancialContext";
+import { useState } from "react";
 
-const FinancialContext = createContext();
+import "./profile.css";
 
-export function FinancialProvider({ children }) {
-  const [email, setEmail] = useState(localStorage.getItem("email") || "");
-  const [password, setPassword] = useState(localStorage.getItem("password") || "");
-  const [name, setName] = useState(localStorage.getItem("name") || "");
-  const [age, setAge] = useState(localStorage.getItem("age") || "");
-  const [income, setIncome] = useState(Number(localStorage.getItem("income")) || 0);
-  const [expenses, setExpenses] = useState({
-    Discretionary: 0,
-    Groceries: 0,
-    Utilities: 0,
-    Transport: 0,
-  });
+export default function ProfileSetup() {
+  const navigate = useNavigate();
 
-  const [riskTolerance, setRiskTolerance] = useState(localStorage.getItem("riskTolerance") || "Moderate");
-  const [goal, setGoal] = useState(localStorage.getItem("goal") || "Property");
+  const {
+    name,
+    setName,
+    age,
+    setAge,
+    income,
+    setIncome,
+    riskTolerance,
+    setRiskTolerance,
+    goal,
+    setGoal,
+    email,
+    setEmail,
+    password,
+    setPassword,
+  } = useFinancial();
 
-useEffect(() => {
-  localStorage.setItem("name", name);
-}, [name]);
+  const [error, setError] = useState("");
 
-useEffect(() => {
-  localStorage.setItem("age", age);
-}, [age]);
+  const handleSubmit = () => {
+   if (!email ||!password ||!name ||!age ||!income) {
+      setError("Please complete all required fields.");
+      return;
+    }
 
-useEffect(() => {
-  localStorage.setItem("income", income);
-}, [income]);
-
-useEffect(() => {
-  localStorage.setItem(
-    "riskTolerance",
-    riskTolerance
-  );
-}, [riskTolerance]);
-
-useEffect(() => {
-  localStorage.setItem("goal", goal);
-}, [goal]);
-
-useEffect(() => {
-  localStorage.setItem("email", email);
-}, [email]);
-
-useEffect(() => {
-  localStorage.setItem("password", password);
-}, [password]);
+   navigate("/");
+  };
 
   return (
-    <FinancialContext.Provider
-      value={{
-        email,
-        setEmail,
+    <div className="profile-page">
 
-        password,
-        setPassword,
+      <div className="header">
+        Create Your Profile
+      </div>
 
-        name,
-        setName,
+      <div className="profile-card">
 
-        age,
-        setAge,
+        <div className="card-header">
+          Personal Information
+        </div>
 
-        income,
-        setIncome,
+        <div className="profile-field">
+        <label>Email</label>
 
-        expenses,
-        setExpenses,
+  <input
+    type="email"
+    value={email}
+    onChange={(e) =>
+      setEmail(e.target.value)
+    }
+  />
+</div>
 
-        riskTolerance,
-        setRiskTolerance,
+<div className="profile-field">
+  <label>Password</label>
 
-        goal,
-        setGoal,
-      }}
-    >
-      {children}
-    </FinancialContext.Provider>
+  <input
+    type="password"
+    value={password}
+    onChange={(e) =>
+      setPassword(e.target.value)
+    }
+  />
+</div>
+
+        <div className="profile-field">
+          <label>Name</label>
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+
+        <div className="profile-field">
+          <label>Age</label>
+          <input
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
+          />
+        </div>
+
+        <div className="profile-field">
+          <label>Monthly Income</label>
+          <input
+            value={income === 0 ? "" : income}
+            onChange={(e) =>
+              setIncome(Number(e.target.value) || 0)
+            }
+          />
+        </div>
+
+        <div className="profile-field">
+          <label>Risk Tolerance</label>
+
+          <select
+            value={riskTolerance}
+            onChange={(e) =>
+              setRiskTolerance(e.target.value)
+            }
+          >
+            <option>Conservative</option>
+            <option>Moderate</option>
+            <option>Aggressive</option>
+          </select>
+        </div>
+
+        <div className="profile-field">
+          <label>Primary Goal</label>
+
+          <select
+            value={goal}
+            onChange={(e) => setGoal(e.target.value)}
+          >
+            <option>Property</option>
+            <option>Retirement</option>
+            <option>Emergency Fund</option>
+            <option>Wealth Building</option>
+          </select>
+        </div>
+
+        {error && (
+          <p className="profile-error">
+            {error}
+          </p>
+        )}
+
+        <button
+          className="profile-button"
+          onClick={handleSubmit}
+        >
+          Create Account
+        </button>
+
+      </div>
+
+    </div>
   );
-}
-
-export function useFinancial() {
-  return useContext(FinancialContext);
 }
