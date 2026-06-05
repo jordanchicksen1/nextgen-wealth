@@ -3,12 +3,14 @@ import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import "./tracks.css";
 import BackToTop from "../components/BackToTop";
+import { useFinancial } from "../context/FinancialContext";
 
 
 import gsap from "gsap";
 
 export default function Track() {
   const { id } = useParams();
+  const { income, riskTolerance } = useFinancial();
 
   const [completed, setCompleted] = useState([]);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -158,6 +160,33 @@ export default function Track() {
           <div className="big-card">
             <div className="card-header">Recommendation</div>
             <p>{track.recommendation}</p>
+
+<hr />
+
+{income < 20000 && (
+  <p>
+    Based on your income, focus on building an emergency fund before taking on
+    large financial commitments.
+  </p>
+)}
+
+{income >= 20000 && income < 50000 && (
+  <p>
+    You may be in a position to balance saving and investing whilst pursuing
+    this strategy.
+  </p>
+)}
+
+{income >= 50000 && (
+  <p>
+    Your income suggests you may be able to pursue this strategy more
+    aggressively.
+  </p>
+)}
+
+<p>
+  <strong>Risk Profile:</strong> {riskTolerance}
+</p>
           </div>
 
         </div>

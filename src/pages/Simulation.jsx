@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import "./simulation.css";
 import BackToTop from "../components/BackToTop";
+import { useFinancial } from "../context/FinancialContext";
 
 import { LineChart, Line, XAxis, YAxis, Tooltip } from "recharts";
 
@@ -9,7 +10,7 @@ import { LineChart, Line, XAxis, YAxis, Tooltip } from "recharts";
 import gsap from "gsap";
 
 export default function Simulation() {
-  const [salary, setSalary] = useState(0);
+  const { income } = useFinancial();
   const [carPrice, setCarPrice] = useState(0);
   const [monthlyPayment, setMonthlyPayment] = useState(0);
   const [investment, setInvestment] = useState(0);
@@ -51,7 +52,7 @@ export default function Simulation() {
   const validate = () => {
     const newErrors = {};
 
-    if (!salary) newErrors.salary = true;
+    if (!income) newErrors.income = true;
     if (!carPrice) newErrors.carPrice = true;
     if (!monthlyPayment) newErrors.monthlyPayment = true;
     if (!investment) newErrors.investment = true;
@@ -79,7 +80,7 @@ export default function Simulation() {
 
   const carTotal = monthlyPayment * 12 * years;
   const opportunityCost = investmentValue - carTotal;
-  const affordability = salary > 0 ? (monthlyPayment / salary) * 100 : 0;
+  const affordability = income > 0 ? (monthlyPayment / salary) * 100 : 0;
 
   
   const data = [];
@@ -110,9 +111,9 @@ export default function Simulation() {
           <div className="card-header">Input</div>
 
           <div className="input-row">
-            <span>Salary</span>
+            <span>Income</span>
             <input
-              className={errors.salary ? "input-error" : ""}
+              className={errors.income ? "input-error" : ""}
               value={salary === 0 ? "" : salary}
               onChange={(e) => setSalary(Number(e.target.value) || 0)}
             />

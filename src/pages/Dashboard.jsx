@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import "./dashboard.css";
 import BackToTop from "../components/BackToTop";
+import { useFinancial } from "../context/FinancialContext";
 
 import { PieChart, Pie, Cell, Tooltip } from "recharts";
 
@@ -10,18 +11,12 @@ import gsap from "gsap";
 
 export default function Dashboard() {
   const [editingIncome, setEditingIncome] = useState(false);
-  const [income, setIncome] = useState(0);
+  const { income, setIncome } = useFinancial();
 
   const [showExpenses, setShowExpenses] = useState(false);
   const [showSavings, setShowSavings] = useState(false);
 
-  const [expenses, setExpenses] = useState({
-    Discretionary: 0,
-    Groceries: 0,
-    Utilities: 0,
-    Transport: 0,
-  });
-
+  const { expenses, setExpenses } = useFinancial();
   const formatMoney = (num) => num.toLocaleString("en-ZA");
 
   const expenseInfo = {
