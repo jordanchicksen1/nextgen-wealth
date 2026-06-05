@@ -25,6 +25,10 @@ export default function Navbar() {
           <Link className={location.pathname === "/simulations" ? "active" : ""} to="/simulations">
             Simulations
           </Link>
+
+          <Link className={location.pathname === "/profile" ? "active" : ""} to="/profile">
+            Profile
+          </Link>
         </div>
       </nav>
     </div>

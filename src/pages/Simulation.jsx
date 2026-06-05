@@ -112,11 +112,9 @@ export default function Simulation() {
 
           <div className="input-row">
             <span>Income</span>
-            <input
-              className={errors.income ? "input-error" : ""}
-              value={income === 0 ? "" : salary}
-              onChange={(e) => setIncome(Number(e.target.value) || 0)}
-            />
+              <input value={income === 0 ? "" : income}
+                disabled
+              />
           </div>
 
           <div className="input-row">

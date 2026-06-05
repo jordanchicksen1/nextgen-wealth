@@ -3,6 +3,9 @@ import { createContext, useContext, useState } from "react";
 const FinancialContext = createContext();
 
 export function FinancialProvider({ children }) {
+  const [name, setName] = useState("");
+  const [age, setAge] = useState("");
+
   const [income, setIncome] = useState(0);
 
   const [expenses, setExpenses] = useState({
@@ -19,6 +22,12 @@ export function FinancialProvider({ children }) {
   return (
     <FinancialContext.Provider
       value={{
+        name,
+        setName,
+
+        age,
+        setAge,
+
         income,
         setIncome,
 
