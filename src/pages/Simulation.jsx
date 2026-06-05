@@ -80,7 +80,7 @@ export default function Simulation() {
 
   const carTotal = monthlyPayment * 12 * years;
   const opportunityCost = investmentValue - carTotal;
-  const affordability = income > 0 ? (monthlyPayment / salary) * 100 : 0;
+  const affordability = income > 0 ? (monthlyPayment / income) * 100 : 0;
 
   
   const data = [];
@@ -114,8 +114,8 @@ export default function Simulation() {
             <span>Income</span>
             <input
               className={errors.income ? "input-error" : ""}
-              value={salary === 0 ? "" : salary}
-              onChange={(e) => setSalary(Number(e.target.value) || 0)}
+              value={income === 0 ? "" : salary}
+              onChange={(e) => setIncome(Number(e.target.value) || 0)}
             />
           </div>
 
