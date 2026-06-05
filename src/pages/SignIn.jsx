@@ -7,8 +7,8 @@ export default function SignIn() {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
-
   const [error, setError] = useState("");
 
   const handleLogin = () => {
@@ -43,6 +43,12 @@ export default function SignIn() {
           Sign In
         </div>
 
+        <p className="signin-text">
+        📈 Continue your financial journey and
+        access your personalised strategy tracks
+        and simulations.
+        </p>
+
         <div className="profile-field">
           <label>Email</label>
 
@@ -56,16 +62,34 @@ export default function SignIn() {
         </div>
 
         <div className="profile-field">
-          <label>Password</label>
+  <label>Password</label>
 
-          <input
-            type="password"
-            value={password}
-            onChange={(e) =>
-              setPassword(e.target.value)
-            }
-          />
-        </div>
+  <div className="password-wrapper">
+
+    <input
+      type={
+        showPassword
+          ? "text"
+          : "password"
+      }
+      value={password}
+      onChange={(e) =>
+        setPassword(e.target.value)
+      }
+    />
+
+    <button
+      type="button"
+      className="eye-button"
+      onClick={() =>
+        setShowPassword(!showPassword)
+      }
+    >
+      {showPassword ? "🙈" : "👁️"}
+    </button>
+
+  </div>
+</div>
 
         {error && (
           <p className="profile-error">

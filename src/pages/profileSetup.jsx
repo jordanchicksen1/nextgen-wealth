@@ -26,14 +26,35 @@ export default function ProfileSetup() {
 
   const [error, setError] = useState("");
 
-  const handleSubmit = () => {
-   if (!email ||!password ||!name ||!age ||!income) {
-      setError("Please complete all required fields.");
-      return;
-    }
+  const [showPassword, setShowPassword] = useState(false);
 
-   navigate("/");
-  };
+  const handleSubmit = () => {
+  if (
+    !email ||
+    !password ||
+    !name ||
+    !age ||
+    !income
+  ) {
+    setError("Please complete all required fields.");
+    return;
+  }
+
+  localStorage.setItem(
+    "user",
+    JSON.stringify({
+      email,
+      password,
+      name,
+      age,
+      income,
+      riskTolerance,
+      goal,
+    })
+  );
+
+  navigate("/");
+};
 
   return (
     <div className="profile-page">
@@ -42,6 +63,19 @@ export default function ProfileSetup() {
         Create Your Profile
       </div>
 
+<div className="profile-intro">
+
+  <h2>🚀 Start Your Financial Journey</h2>
+
+  <p>
+    Create a profile so NextGen Wealth can
+    personalise simulations, strategy tracks
+    and recommendations based on your goals.
+  </p>
+
+</div>
+
+
       <div className="profile-card">
 
         <div className="card-header">
@@ -49,7 +83,7 @@ export default function ProfileSetup() {
         </div>
 
         <div className="profile-field">
-        <label>Email</label>
+        <label>📧 Email</label>
 
   <input
     type="email"
@@ -61,19 +95,37 @@ export default function ProfileSetup() {
 </div>
 
 <div className="profile-field">
-  <label>Password</label>
+  <label>🔒 Password</label>
 
-  <input
-    type="password"
-    value={password}
-    onChange={(e) =>
-      setPassword(e.target.value)
-    }
-  />
+  <div className="password-wrapper">
+
+    <input
+      type={
+        showPassword
+          ? "text"
+          : "password"
+      }
+      value={password}
+      onChange={(e) =>
+        setPassword(e.target.value)
+      }
+    />
+
+    <button
+      type="button"
+      className="eye-button"
+      onClick={() =>
+        setShowPassword(!showPassword)
+      }
+    >
+      {showPassword ? "🙈" : "👁️"}
+    </button>
+
+  </div>
 </div>
 
         <div className="profile-field">
-          <label>Name</label>
+          <label>👤 Name</label>
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -81,7 +133,7 @@ export default function ProfileSetup() {
         </div>
 
         <div className="profile-field">
-          <label>Age</label>
+          <label>🎂 Age</label>
           <input
             value={age}
             onChange={(e) => setAge(e.target.value)}
@@ -89,7 +141,7 @@ export default function ProfileSetup() {
         </div>
 
         <div className="profile-field">
-          <label>Monthly Income</label>
+          <label>💰 Monthly Income</label>
           <input
             value={income === 0 ? "" : income}
             onChange={(e) =>
@@ -99,7 +151,7 @@ export default function ProfileSetup() {
         </div>
 
         <div className="profile-field">
-          <label>Risk Tolerance</label>
+          <label>🛡️ Risk Tolerance</label>
 
           <select
             value={riskTolerance}
@@ -107,23 +159,23 @@ export default function ProfileSetup() {
               setRiskTolerance(e.target.value)
             }
           >
-            <option>Conservative</option>
-            <option>Moderate</option>
-            <option>Aggressive</option>
+            <option>🛡️ Conservative</option>
+            <option>⚖️ Moderate</option>
+            <option>🚀 Aggressive</option>
           </select>
         </div>
 
         <div className="profile-field">
-          <label>Primary Goal</label>
+          <label>🎯 Primary Goal</label>
 
           <select
             value={goal}
             onChange={(e) => setGoal(e.target.value)}
           >
-            <option>Property</option>
-            <option>Retirement</option>
-            <option>Emergency Fund</option>
-            <option>Wealth Building</option>
+            <option>🏠 Property</option>
+            <option>💰 Retirement</option>
+            <option>🧰 Emergency Fund</option>
+            <option>🌍 Wealth Building</option>
           </select>
         </div>
 
