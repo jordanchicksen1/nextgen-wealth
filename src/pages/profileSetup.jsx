@@ -53,6 +53,7 @@ export default function ProfileSetup() {
 
   <input
     type="email"
+    style = {{width:"100%"}}
     value={email}
     onChange={(e) =>
       setEmail(e.target.value)

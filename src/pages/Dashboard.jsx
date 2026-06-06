@@ -107,13 +107,14 @@ export default function Dashboard() {
           <strong>Net Income:</strong>
           {editingIncome ? (
             <input
-              type="number"
-              placeholder="0"
-              value={income === 0 ? "" : income}
-              onChange={(e) => setIncome(Number(e.target.value))}
-              onBlur={() => setEditingIncome(false)}
-              autoFocus
-            />
+  className="expense-input"
+  type="number"
+  placeholder="0"
+  value={income === 0 ? "" : income}
+  onChange={(e) => setIncome(Number(e.target.value))}
+  onBlur={() => setEditingIncome(false)}
+  autoFocus
+/>
           ) : (
             ` R${formatMoney(income)}`
           )}
@@ -158,11 +159,12 @@ export default function Dashboard() {
               </div>
 
               <input
-                type="number"
-                placeholder="0"
-                value={expenses[key] === 0 ? "" : expenses[key]}
-                onChange={(e) => updateExpense(key, e.target.value)}
-              />
+  className="expense-input"
+  type="number"
+  placeholder="0"
+  value={expenses[key] === 0 ? "" : expenses[key]}
+  onChange={(e) => updateExpense(key, e.target.value)}
+/>
             </div>
           ))}
         </div>
