@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import gsap from "gsap";
 
 import "./profile.css";
 
@@ -30,6 +32,47 @@ export default function SignIn() {
     }
   };
 
+useEffect(() => {
+  gsap.fromTo(
+    ".header",
+    { opacity: 0, y: -15 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.5,
+      ease: "power2.out",
+    }
+  );
+
+  gsap.fromTo(
+    ".profile-card",
+    { opacity: 0, y: 25 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      ease: "power2.out",
+    }
+  );
+
+  gsap.fromTo(
+  ".feature-card",
+  {
+    opacity: 0,
+    y: 10,
+  },
+  {
+    opacity: 1,
+    y: 0,
+    duration: 0.4,
+    stagger: 0.1,
+    delay: 0.3,
+    ease: "power2.out",
+  }
+);
+
+}, []);
+
   return (
     <div className="profile-page">
 
@@ -39,15 +82,39 @@ export default function SignIn() {
 
       <div className="profile-card">
 
-        <div className="card-header">
-          Sign In
-        </div>
 
-        <p className="signin-text">
-        📈 Continue your financial journey and
-        access your personalised strategy tracks
-        and simulations.
-        </p>
+ <div className="signin-features">
+
+  <div className="feature-card">
+    <h3>📊 Track Progress</h3>
+
+    <p>
+      Monitor your financial growth and
+      spending habits.
+    </p>
+  </div>
+
+  <div className="feature-card">
+    <h3>🎯 Reach Goals</h3>
+
+    <p>
+      Follow strategy tracks tailored
+      to your objectives.
+    </p>
+  </div>
+
+  <div className="feature-card">
+    <h3>💰 Build Wealth</h3>
+
+    <p>
+      Explore simulations and learn
+      long-term investing principles.
+    </p>
+  </div>
+</div>
+<div>
+  
+</div>
 
         <div className="profile-field">
           <label>Email</label>

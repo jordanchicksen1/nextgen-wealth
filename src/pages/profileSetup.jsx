@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useFinancial } from "../context/FinancialContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import gsap from "gsap";
 
 import "./profile.css";
 
@@ -8,32 +9,75 @@ export default function ProfileSetup() {
   const navigate = useNavigate();
 
   const {
-    name,
-    setName,
-    age,
-    setAge,
-    income,
-    setIncome,
-    riskTolerance,
-    setRiskTolerance,
-    goal,
-    setGoal,
-    email,
-    setEmail,
-    password,
-    setPassword,
-  } = useFinancial();
+  setName,
+  setAge,
+  setIncome,
+  setRiskTolerance,
+  setGoal,
+  setEmail,
+  setPassword,
+} = useFinancial();
+
+const [name, updateName] = useState("");
+const [age, updateAge] = useState("");
+const [income, updateIncome] = useState("");
+const [riskTolerance, updateRiskTolerance] =
+  useState("Moderate");
+
+const [goal, updateGoal] =
+  useState("Property");
+
+const [email, updateEmail] =
+  useState("");
+
+const [password, updatePassword] =
+  useState("");
 
   const [error, setError] = useState("");
 
   const handleSubmit = () => {
-   if (!email ||!password ||!name ||!age ||!income) {
-      setError("Please complete all required fields.");
-      return;
-    }
+  if (!email || !password || !name || !age || !income) {
+    setError("Please complete all required fields.");
+    return;
+  }
 
-   navigate("/");
-  };
+  setEmail(email);
+  setPassword(password);
+
+  setName(name);
+  setAge(age);
+
+  setIncome(Number(income));
+
+  setRiskTolerance(riskTolerance);
+  setGoal(goal);
+
+  navigate("/");
+};
+
+useEffect(() => {
+  gsap.fromTo(
+    ".header",
+    { opacity: 0, y: -15 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.5,
+      ease: "power2.out",
+    }
+  );
+
+  gsap.fromTo(
+    ".profile-card",
+    { opacity: 0, y: 25 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      ease: "power2.out",
+    }
+  );
+}, []);
 
   return (
     <div className="profile-page">
@@ -56,7 +100,7 @@ export default function ProfileSetup() {
     style = {{width:"100%"}}
     value={email}
     onChange={(e) =>
-      setEmail(e.target.value)
+      updateEmail(e.target.value)
     }
   />
 </div>
@@ -68,7 +112,7 @@ export default function ProfileSetup() {
     type="password"
     value={password}
     onChange={(e) =>
-      setPassword(e.target.value)
+      updatePassword(e.target.value)
     }
   />
 </div>
@@ -77,7 +121,7 @@ export default function ProfileSetup() {
           <label>Name</label>
           <input
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => updateName(e.target.value)}
           />
         </div>
 
@@ -85,7 +129,7 @@ export default function ProfileSetup() {
           <label>Age</label>
           <input
             value={age}
-            onChange={(e) => setAge(e.target.value)}
+            onChange={(e) => updateAge(e.target.value)}
           />
         </div>
 
@@ -94,7 +138,7 @@ export default function ProfileSetup() {
           <input
             value={income === 0 ? "" : income}
             onChange={(e) =>
-              setIncome(Number(e.target.value) || 0)
+              updateIncome(Number(e.target.value) || 0)
             }
           />
         </div>
@@ -105,7 +149,7 @@ export default function ProfileSetup() {
           <select
             value={riskTolerance}
             onChange={(e) =>
-              setRiskTolerance(e.target.value)
+              updateRiskTolerance(e.target.value)
             }
           >
             <option>Conservative</option>
@@ -119,7 +163,7 @@ export default function ProfileSetup() {
 
           <select
             value={goal}
-            onChange={(e) => setGoal(e.target.value)}
+            onChange={(e) => updateGoal(e.target.value)}
           >
             <option>Property</option>
             <option>Retirement</option>

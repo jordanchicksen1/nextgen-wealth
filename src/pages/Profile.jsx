@@ -1,11 +1,14 @@
 import Navbar from "../components/Navbar";
 import BackToTop from "../components/BackToTop";
-
+import { useNavigate } from "react-router-dom";
 import { useFinancial } from "../context/FinancialContext";
+import { useEffect } from "react";
+import gsap from "gsap";
 
 import "./profile.css";
 
 export default function Profile() {
+  const navigate = useNavigate();
   const {
     name,
     age,
@@ -14,6 +17,62 @@ export default function Profile() {
     goal,
   } = useFinancial();
 
+ useEffect(() => {
+  gsap.fromTo(
+    ".header",
+    { opacity: 0, y: -15 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.5,
+      ease: "power2.out",
+    }
+  );
+
+  gsap.fromTo(
+    ".profile-intro, .profile-card",
+    { opacity: 0, y: 25 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      stagger: 0.15,
+      ease: "power2.out",
+    }
+  );
+
+  gsap.fromTo(
+    ".profile-stat-card, .profile-recommendation",
+    {
+      opacity: 0,
+      y: 20,
+    },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.45,
+      stagger: 0.12,
+      delay: 0.5,
+      ease: "power2.out",
+    }
+  );
+
+  gsap.fromTo(
+    ".profile-button",
+    {
+      opacity: 0,
+      scale: 0.9,
+    },
+    {
+      opacity: 1,
+      scale: 1,
+      duration: 0.4,
+      delay: 1,
+      ease: "back.out(1.7)",
+    }
+  );
+}, []);
+
   return (
     <div className="profile-page">
       <Navbar />
@@ -21,6 +80,16 @@ export default function Profile() {
       <div className="header">
         My Profile
       </div>
+
+      <div className="profile-intro">
+  <h2>👋 Hi there, {name}</h2>
+
+  <p>
+    Track your progress, review your financial
+    profile and explore recommendations
+    tailored to your goals.
+  </p>
+</div>
 
       <div className="profile-card">
 
@@ -89,6 +158,13 @@ export default function Profile() {
 </div>
 </div>
       </div>
+
+<button
+  className="profile-button"
+  onClick={() => navigate("/")}
+>
+  Sign Out
+</button>
 
       <BackToTop />
     </div>

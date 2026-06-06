@@ -9,21 +9,26 @@ import Simulation from "./pages/Simulation";
 import ProfileSetup from "./pages/ProfileSetup";
 import Profile from "./pages/Profile";
 import SignIn from "./pages/SignIn";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
+  <>
+    <ScrollToTop />
+
     <Routes>
       <Route path="/" element={<SignIn />} />
       <Route path="/dashboard" element={<Dashboard />} />
-       <Route path="/tracks" element={<TracksOverview />} />
-        <Route path="/tracks/:id" element={<Track />} />
+      <Route path="/tracks" element={<TracksOverview />} />
+      <Route path="/tracks/:id" element={<Track />} />
       <Route path="/simulations" element={<SimulationsOverview />} />
       <Route path="/simulation" element={<Simulation />} />
-      <Route path="/setup-profile" element={<ProfileSetup />}/>
-      <Route path="/home" element={<Home />}/>
-      <Route path="/profile" element={<Profile />}/>
+      <Route path="/setup-profile" element={<ProfileSetup />} />
+      <Route path="/home" element={<Home />} />
+      <Route path="/profile" element={<Profile />} />
     </Routes>
-  );
+  </>
+);
 }
 
 export default App;
