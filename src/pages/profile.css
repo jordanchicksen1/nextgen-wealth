@@ -350,7 +350,13 @@ margin-bottom: 10px;
   }
 
   .signin-features {
-    grid-template-columns: 1fr;
-  }
+  flex-direction: column;
+  align-items: center;
+}
+
+.feature-card {
+  width: 100%;
+  max-width: 450px;
+}
 
 }

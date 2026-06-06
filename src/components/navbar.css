@@ -65,3 +65,30 @@
   background: #3b5bdb;
   color: white;
 }
+
+@media (max-width: 768px) {
+
+  .navbar {
+    flex-direction: column;
+
+    gap: 15px;
+  }
+
+  .nav-links {
+    width: 100%;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    gap: 10px;
+  }
+
+  .nav-links a {
+    flex: 1 1 120px;
+
+    text-align: center;
+  }
+
+}
