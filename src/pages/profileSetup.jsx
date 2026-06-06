@@ -35,6 +35,8 @@ const [password, updatePassword] =
 
   const [error, setError] = useState("");
 
+const [showPassword, setShowPassword] = useState(false);
+
   const handleSubmit = () => {
   if (!email || !password || !name || !age || !income) {
     setError("Please complete all required fields.");
@@ -68,15 +70,35 @@ useEffect(() => {
   );
 
   gsap.fromTo(
-    ".profile-card",
-    { opacity: 0, y: 25 },
-    {
-      opacity: 1,
-      y: 0,
-      duration: 0.6,
-      ease: "power2.out",
-    }
-  );
+  ".profile-intro, .profile-card",
+  {
+    opacity: 0,
+    y: 25,
+  },
+  {
+    opacity: 1,
+    y: 0,
+    duration: 0.6,
+    stagger: 0.15,
+    ease: "power2.out",
+  }
+);
+
+gsap.fromTo(
+  ".feature-card",
+  {
+    opacity: 0,
+    y: 15,
+  },
+  {
+    opacity: 1,
+    y: 0,
+    duration: 0.4,
+    stagger: 0.1,
+    delay: 0.3,
+    ease: "power2.out",
+  }
+);
 }, []);
 
   return (
@@ -86,6 +108,20 @@ useEffect(() => {
         Create Your Profile
       </div>
 
+<div className="profile-intro">
+
+  <h2>🚀 Let's Build Your Financial Profile</h2>
+
+  <p>
+    Complete your profile to unlock personalised
+    recommendations, strategy tracks and financial
+    insights tailored to your goals.
+  </p>
+
+</div>
+
+
+
       <div className="profile-card">
 
         <div className="card-header">
@@ -93,7 +129,7 @@ useEffect(() => {
         </div>
 
         <div className="profile-field">
-        <label>Email</label>
+        <label>📧 Email</label>
 
   <input
     type="email"
@@ -106,19 +142,33 @@ useEffect(() => {
 </div>
 
 <div className="profile-field">
-  <label>Password</label>
+  <label>🔒 Password</label>
 
-  <input
-    type="password"
-    value={password}
-    onChange={(e) =>
-      updatePassword(e.target.value)
-    }
-  />
+  <div className="password-wrapper">
+
+    <input
+      type={showPassword ? "text" : "password"}
+      value={password}
+      onChange={(e) =>
+        updatePassword(e.target.value)
+      }
+    />
+
+    <button
+      type="button"
+      className="eye-button"
+      onClick={() =>
+        setShowPassword(!showPassword)
+      }
+    >
+      {showPassword ? "🙈" : "👁️"}
+    </button>
+
+  </div>
 </div>
 
         <div className="profile-field">
-          <label>Name</label>
+          <label>👤 Name</label>
           <input
             value={name}
             onChange={(e) => updateName(e.target.value)}
@@ -126,7 +176,7 @@ useEffect(() => {
         </div>
 
         <div className="profile-field">
-          <label>Age</label>
+          <label>🎂 Age</label>
           <input
             value={age}
             onChange={(e) => updateAge(e.target.value)}
@@ -134,7 +184,7 @@ useEffect(() => {
         </div>
 
         <div className="profile-field">
-          <label>Monthly Income</label>
+          <label>💰 Monthly Income</label>
           <input
             value={income === 0 ? "" : income}
             onChange={(e) =>
@@ -144,7 +194,7 @@ useEffect(() => {
         </div>
 
         <div className="profile-field">
-          <label>Risk Tolerance</label>
+          <label>🛡️ Risk Tolerance</label>
 
           <select
             value={riskTolerance}
@@ -159,7 +209,7 @@ useEffect(() => {
         </div>
 
         <div className="profile-field">
-          <label>Primary Goal</label>
+          <label>🎯 Primary Goal</label>
 
           <select
             value={goal}
