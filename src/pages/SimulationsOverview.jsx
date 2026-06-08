@@ -75,9 +75,11 @@ export default function SimulationsOverview() {
             Should you rent or buy a property?
           </p>
 
-          <button className="sim-button" disabled>
-            Calculate
-          </button>
+          <Link to="/property-simulation">
+            <button className="sim-button">
+              Calculate
+            </button>
+          </Link>
         </div>
 
        
@@ -103,9 +105,11 @@ export default function SimulationsOverview() {
             Invest in local or offshore accounts?
           </p>
 
-          <button className="sim-button" disabled>
-            Calculate
-          </button>
+          <Link to="/offshore-simulation">
+            <button className="sim-button">
+              Calculate
+            </button>
+          </Link>
         </div>
 
       </div>

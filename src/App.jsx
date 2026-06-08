@@ -10,6 +10,8 @@ import ProfileSetup from "./pages/ProfileSetup";
 import Profile from "./pages/Profile";
 import SignIn from "./pages/SignIn";
 import ScrollToTop from "./components/ScrollToTop";
+import PropertySimulation from "./pages/PropertySimulation";
+import OffshoreSimulation from "./pages/OffshoreSimulation";
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
       <Route path="/setup-profile" element={<ProfileSetup />} />
       <Route path="/home" element={<Home />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/property-simulation" element={<PropertySimulation />} />
+      <Route path="/offshore-simulation" element={<OffshoreSimulation />} />
     </Routes>
   </>
 );
