@@ -17,21 +17,39 @@ export default function Navbar() {
 
     if (window.innerWidth > 768) return;
 
-    if (menuOpen) {
+   if (menuOpen) {
 
-      gsap.fromTo(
-        menuRef.current,
-        {
-          height: 0,
-        },
-        {
-          height: menuRef.current.scrollHeight,
-          duration: 0.45,
-          ease: "power2.out",
-        }
-      );
+  gsap.set(linksRef.current, {
+    opacity: 0,
+    y: 15,
+  });
 
+  gsap.fromTo(
+    menuRef.current,
+    {
+      height: 0,
+    },
+    {
+      height: menuRef.current.scrollHeight,
+      duration: 0.45,
+      ease: "power2.out",
     }
+  );
+
+  gsap.to(
+    linksRef.current,
+    {
+      opacity: 1,
+      y: 0,
+      stagger: 0.08,
+      duration: 0.25,
+      ease: "power2.out",
+
+      delay: 0.12,
+    }
+  );
+
+}
 
   }, [menuOpen]);
 
@@ -64,21 +82,7 @@ export default function Navbar() {
 
 }, []);
 
-gsap.fromTo(
-  linksRef.current,
-  {
-    opacity: 0,
-    y: -10,
-  },
-  {
-    opacity: 1,
-    y: 0,
-    stagger: 0.08,
-    duration: 0.25,
-    ease: "power2.out",
-    delay: 0.1,
-  }
-);
+
 
 
   return (

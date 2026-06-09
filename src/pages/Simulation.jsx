@@ -15,9 +15,9 @@ export default function Simulation() {
   const [monthlyPayment, setMonthlyPayment] = useState(0);
   const [investment, setInvestment] = useState(0);
   const [years, setYears] = useState(0);
-
   const [calculated, setCalculated] = useState(false);
   const [errors, setErrors] = useState({});
+  const [activeTip, setActiveTip] = useState(null);
 
   const rate = 0.1;
   const months = years * 12;
@@ -118,7 +118,19 @@ export default function Simulation() {
           </div>
 
           <div className="input-row">
-            <span>Car price</span>
+            <div className="tooltip-wrapper">
+
+            <span>Car Price</span>
+
+  <button className="tooltip-icon" onClick={() => setActiveTip(activeTip === "carPrice" ? null : "carPrice")}>
+    ?
+  </button>
+
+  {activeTip === "carPrice" && (<div className="tooltip-box"> The total purchase price of the vehicle before financing.
+    </div>
+  )}
+
+</div>
             <input
               className={errors.carPrice ? "input-error" : ""}
               value={carPrice === 0 ? "" : carPrice}
