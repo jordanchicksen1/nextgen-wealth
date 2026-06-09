@@ -2,7 +2,7 @@ import Navbar from "../components/Navbar";
 import BackToTop from "../components/BackToTop";
 import { useNavigate } from "react-router-dom";
 import { useFinancial } from "../context/FinancialContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import gsap from "gsap";
 
 import "./profile.css";
@@ -10,12 +10,23 @@ import "./profile.css";
 export default function Profile() {
   const navigate = useNavigate();
   const {
-    name,
-    age,
-    income,
-    riskTolerance,
-    goal,
-  } = useFinancial();
+  name,
+  setName,
+
+  age,
+  setAge,
+
+  income,
+  setIncome,
+
+  riskTolerance,
+  setRiskTolerance,
+
+  goal,
+  setGoal,
+} = useFinancial();
+
+  const [editing, setEditing] = useState(false);
 
  useEffect(() => {
   gsap.fromTo(
@@ -82,6 +93,13 @@ export default function Profile() {
       </div>
 
       <div className="profile-intro">
+<button
+  className="edit-button"
+  onClick={() => setEditing(!editing)}
+>
+  {editing ? "✔️" : "✏️"}
+</button>
+
   <h2>👋 Hi there, {name}</h2>
 
   <p>
@@ -96,30 +114,113 @@ export default function Profile() {
         <div className="profile-grid">
 
   <div className="profile-stat-card">
-    <h2>👤 Profile</h2>
+  <h2>👤 Profile</h2>
 
-    <p><strong>Name:</strong> {name}</p>
-    <p><strong>Age:</strong> {age}</p>
-  </div>
+  {editing ? (
+    <>
+      <input
+        value={name}
+        onChange={(e) =>
+          setName(e.target.value)
+        }
+      />
+
+      <input
+        type="number"
+        value={age}
+        onChange={(e) =>
+          setAge(Number(e.target.value) || 0)
+        }
+      />
+    </>
+  ) : (
+    <>
+      <p><strong>Name:</strong> {name}</p>
+      <p><strong>Age:</strong> {age}</p>
+    </>
+  )}
+</div>
 
   <div className="profile-stat-card">
     <h2>💰 Income</h2>
 
-    <p>
-      R{income.toLocaleString("en-ZA")}
-    </p>
+    {editing ? (
+  <input
+    type="number"
+    value={income}
+    onChange={(e) =>
+      setIncome(
+        Number(e.target.value) || 0
+      )
+    }
+  />
+) : (
+  <p>
+    R{income.toLocaleString("en-ZA")}
+  </p>
+)}
   </div>
 
   <div className="profile-stat-card">
     <h2>🛡️ Risk Profile</h2>
 
-    <p>{riskTolerance}</p>
+    {editing ? (
+  <select
+    value={riskTolerance}
+    onChange={(e) =>
+      setRiskTolerance(
+        e.target.value
+      )
+    }
+  >
+    <option value="Low">
+      Conservative
+    </option>
+
+    <option value="Moderate">
+      Moderate
+    </option>
+
+    <option value="High">
+      Aggressive
+    </option>
+  </select>
+) : (
+  <p>{riskTolerance}</p>
+)}
   </div>
 
   <div className="profile-stat-card">
     <h2>🎯 Goal</h2>
 
-    <p>{goal}</p>
+   {editing ? (
+  <select
+    value={goal}
+    onChange={(e) =>
+      setGoal(
+        e.target.value
+      )
+    }
+  >
+    <option value="Property">
+      Property
+    </option>
+
+    <option value="Retirement">
+      Retirement
+    </option>
+
+    <option value="Emergency Fund">
+      Emergency Fund
+    </option>
+
+    <option value="Wealth Building">
+      Wealth Building
+    </option>
+  </select>
+) : (
+  <p>{goal}</p>
+)}
   </div>
 
 
@@ -127,33 +228,145 @@ export default function Profile() {
 
   <h2>📊 Personal Recommendation</h2>
 
-  {goal.includes("Property") && (
+  {goal.includes("Property") &&
+    riskTolerance === "Low" && (
+      <p>
+        🏠 Cautious Home Planner
+
+        <br /><br />
+
+        Your goal is property ownership and
+        your risk profile suggests a preference
+        for stability.
+
+        <br /><br />
+
+        Focus on saving a strong deposit and
+        understanding long-term home ownership
+        costs through the Property First track.
+      </p>
+    )}
+
+  {goal.includes("Property") &&
+    riskTolerance !== "Low" && (
+      <p>
+        🏠 Future Homeowner
+
+        <br /><br />
+
+        Your goal is property ownership.
+
+        <br /><br />
+
+        The Property First track can help
+        you understand deposits, bond
+        repayments and property growth.
+      </p>
+    )}
+
+  {goal.includes("Retirement") &&
+    riskTolerance === "High" && (
+      <p>
+        🌱 Growth-Oriented Planner
+
+        <br /><br />
+
+        You are planning for retirement and
+        appear comfortable taking more risk.
+
+        <br /><br />
+
+        Focus on long-term investing and the
+        power of compound growth.
+      </p>
+    )}
+
+  {goal.includes("Retirement") &&
+    riskTolerance !== "High" && (
+      <p>
+        🌱 Long-Term Planner
+
+        <br /><br />
+
+        Consistent investing and patience
+        are often more important than taking
+        excessive risk.
+
+        <br /><br />
+
+        Building habits now can have a major
+        impact on retirement.
+      </p>
+    )}
+
+  {goal.includes("Emergency Fund") && (
     <p>
-      Property First may be the most suitable
-      strategy track for your current goal.
+      🛟 Safety First
+
+      <br /><br />
+
+      Your priority should be building an
+      emergency fund.
+
+      <br /><br />
+
+      Aim for 3–6 months of essential
+      expenses before focusing heavily
+      on long-term investing.
     </p>
   )}
 
-  {goal.includes("Retirement") && (
-    <p>
-      Focus on long-term contributions and
-      compound growth.
-    </p>
-  )}
+  {goal.includes("Wealth Building") &&
+    riskTolerance === "High" && (
+      <p>
+        📈 Growth Investor
 
-  {goal.includes("Emergency") && (
-    <p>
-      Building a cash reserve should be your
-      first priority before investing heavily.
-    </p>
-  )}
+        <br /><br />
 
-  {goal.includes("Wealth") && (
-    <p>
-      Global Wealth may align with your
-      long-term objectives.
-    </p>
-  )}
+        Your combination of Wealth Building
+        and a High risk profile suggests that
+        you are comfortable pursuing higher
+        growth opportunities.
+
+        <br /><br />
+
+        The Global Wealth track may be a
+        strong place to start.
+      </p>
+    )}
+
+  {goal.includes("Wealth Building") &&
+    riskTolerance === "Moderate" && (
+      <p>
+        📈 Balanced Wealth Builder
+
+        <br /><br />
+
+        Your profile suggests a balance
+        between growth and stability.
+
+        <br /><br />
+
+        Focus on diversification and
+        long-term investing through the
+        Global Wealth track.
+      </p>
+    )}
+
+  {goal.includes("Wealth Building") &&
+    riskTolerance === "Low" && (
+      <p>
+        📈 Cautious Wealth Builder
+
+        <br /><br />
+
+        Your goal is long-term wealth,
+        but your preference for lower risk
+        suggests that consistency and
+        diversification should be your
+        primary focus.
+      </p>
+    )}
 
 </div>
 </div>

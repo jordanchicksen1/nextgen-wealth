@@ -331,6 +331,47 @@ margin-bottom: 10px;
   background: rgba(59, 91, 219, 0.18);
 }
 
+.edit-button {
+  float: right;
+
+  border: none;
+
+  background: rgba(255,255,255,0.5);
+
+  backdrop-filter: blur(10px);
+
+  border-radius: 12px;
+
+  padding: 8px 12px;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.edit-button:hover {
+  transform: scale(1.05);
+}
+
+.profile-stat-card input,
+.profile-stat-card select {
+  width: 100%;
+
+  margin-top: 10px;
+
+  padding: 10px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background: rgba(255,255,255,0.7);
+
+  backdrop-filter: blur(10px);
+
+  font-size: 14px;
+}
+
 
 /* MOBILE */
 
