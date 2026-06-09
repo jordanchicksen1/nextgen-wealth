@@ -125,7 +125,7 @@ export default function Simulation() {
       )
     }
   >
-    ?
+    {activeTip === "income" ? ">" : "?"}
   </button>
 
   {activeTip === "income" && (
@@ -148,7 +148,7 @@ export default function Simulation() {
             <span>Car Price</span>
 
   <button className="tooltip-icon" onClick={() => setActiveTip(activeTip === "carPrice" ? null : "carPrice")}>
-    ?
+     {activeTip === "carPrice" ? ">" : "?"}
   </button>
 
   {activeTip === "carPrice" && (<div className="tooltip-box"> The total purchase price of the vehicle before financing.
@@ -178,7 +178,7 @@ export default function Simulation() {
       )
     }
   >
-    ?
+    {activeTip === "monthlyPayment" ? ">" : "?"}
   </button>
 
   {activeTip === "monthlyPayment" && (
@@ -214,7 +214,7 @@ export default function Simulation() {
       )
     }
   >
-    ?
+    {activeTip === "investment" ? ">" : "?"}
   </button>
 
   {activeTip === "investment" && (
@@ -248,7 +248,7 @@ export default function Simulation() {
       )
     }
   >
-    ?
+    {activeTip === "time" ? ">" : "?"}
   </button>
 
   {activeTip === "time" && (

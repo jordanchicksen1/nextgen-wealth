@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import "./simulation.css";
 import BackToTop from "../components/BackToTop";
-
+import gsap from "gsap";
 import {
   LineChart,
   Line,
@@ -44,7 +44,43 @@ export default function OffshoreSimulation() {
       Offshore: Math.floor(offshoreTotal)
     });
 
+    
+
   }
+
+  useEffect(() => {
+
+  gsap.fromTo(
+    ".header",
+    {
+      opacity: 0,
+      y: 15,
+    },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.5,
+      ease: "power2.out",
+    }
+  );
+
+  gsap.fromTo(
+    ".sim-layout .big-card",
+    {
+      opacity: 0,
+      y: 25,
+    },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.5,
+      stagger: 0.2,
+      ease: "power2.out",
+      delay: 0.1,
+    }
+  );
+
+}, []);
 
   return (
     <div className="simulation">
@@ -78,7 +114,7 @@ export default function OffshoreSimulation() {
       )
     }
   >
-    ?
+    {activeTip === "investment" ? ">" : "?"}
   </button>
 
   {activeTip === "investment" && (
@@ -112,7 +148,7 @@ export default function OffshoreSimulation() {
       )
     }
   >
-    ?
+    {activeTip === "years" ? ">" : "?"}
   </button>
 
   {activeTip === "years" && (
@@ -147,7 +183,7 @@ export default function OffshoreSimulation() {
       )
     }
   >
-    ?
+    {activeTip === "local" ? ">" : "?"}
   </button>
 
   {activeTip === "local" && (
@@ -184,7 +220,7 @@ export default function OffshoreSimulation() {
       )
     }
   >
-    ?
+    {activeTip === "offshore" ? ">" : "?"}
   </button>
 
   {activeTip === "offshore" && (

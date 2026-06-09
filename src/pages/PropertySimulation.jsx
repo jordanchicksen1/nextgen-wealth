@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import "./simulation.css";
 import BackToTop from "../components/BackToTop";
-
+import gsap from "gsap";
 import {
   LineChart,
   Line,
@@ -42,6 +42,40 @@ export default function PropertySimulation() {
 
   }
 
+useEffect(() => {
+
+  gsap.fromTo(
+    ".header",
+    {
+      opacity: 0,
+      y: 15,
+    },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.5,
+      ease: "power2.out",
+    }
+  );
+
+  gsap.fromTo(
+    ".sim-layout .big-card",
+    {
+      opacity: 0,
+      y: 25,
+    },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.5,
+      stagger: 0.2,
+      ease: "power2.out",
+      delay: 0.1,
+    }
+  );
+
+}, []);
+
   return (
     <div className="simulation">
 
@@ -74,7 +108,7 @@ export default function PropertySimulation() {
       )
     }
   >
-    ?
+    {activeTip === "rent" ? ">" : "?"}
   </button>
 
   {activeTip === "rent" && (
@@ -108,7 +142,7 @@ export default function PropertySimulation() {
       )
     }
   >
-    ?
+    {activeTip === "bond" ? ">" : "?"}
   </button>
 
   {activeTip === "bond" && (
@@ -142,7 +176,7 @@ export default function PropertySimulation() {
       )
     }
   >
-    ?
+    {activeTip === "deposit" ? ">" : "?"}
   </button>
 
   {activeTip === "deposit" && (
@@ -178,7 +212,7 @@ export default function PropertySimulation() {
       )
     }
   >
-    ?
+    {activeTip === "growth" ? ">" : "?"}
   </button>
 
   {activeTip === "growth" && (
@@ -216,7 +250,7 @@ export default function PropertySimulation() {
       )
     }
   >
-    ?
+    {activeTip === "years" ? ">" : "?"}
   </button>
 
   {activeTip === "years" && (
