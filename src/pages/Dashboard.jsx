@@ -12,12 +12,15 @@ import gsap from "gsap";
 export default function Dashboard() {
   const [editingIncome, setEditingIncome] = useState(false);
   const { income, setIncome } = useFinancial();
-
   const [showExpenses, setShowExpenses] = useState(false);
   const [showSavings, setShowSavings] = useState(false);
-
+  const [showNudge, setShowNudge] = useState(false);
+  const [expensesConfirmed, setExpensesConfirmed] = useState(false);
   const { expenses, setExpenses } = useFinancial();
+  const [tempExpenses, setTempExpenses] = useState(expenses);
   const formatMoney = (num) => num.toLocaleString("en-ZA");
+
+
 
   const expenseInfo = {
     Discretionary: {
@@ -36,11 +39,18 @@ export default function Dashboard() {
       description: "Costs related to getting around",
       examples: "Fuel, Uber, public transport, car payments",
     },
+    Debt: {
+    description: "Monthly debt repayments",
+    examples: "Credit cards, personal loans, store accounts",
+},
   };
 
   const COLORS = ["#3b5bdb", "#22c55e", "#f59e0b", "#ef4444"];
 
-  
+  useEffect(() => {
+  setTempExpenses(expenses);
+}, [expenses]);
+
   useEffect(() => {
     gsap.fromTo(
       ".summary-card, .big-card, .bottom-card, .dropdown",
@@ -58,10 +68,12 @@ export default function Dashboard() {
   const totalExpenses = Object.values(expenses).reduce((a, b) => a + b, 0);
   const savings = income - totalExpenses;
   const savingsRate = income ? ((savings / income) * 100).toFixed(0) : 0;
+  const disposableIncome = savings;
+  const debtToIncome = income > 0 ? (((expenses.Debt || 0) / income) * 100).toFixed(0) : 0;
+  const updateExpense = (key, value) => {setTempExpenses({...tempExpenses,[key]: Number(value),
+ });
+};
 
-  const updateExpense = (key, value) => {
-    setExpenses({ ...expenses, [key]: Number(value) });
-  };
 
   const data = Object.entries(expenses).map(([key, value]) => ({
     name: key,
@@ -94,6 +106,45 @@ export default function Dashboard() {
         return "Your spending is balanced across categories.";
     }
   };
+
+let nudgeTitle = "";
+let nudgeText = "";
+
+if (savingsRate < 10) {
+
+  nudgeTitle = "💡 Savings Warning";
+
+  nudgeText =
+    "Your savings rate is below 10%. Consider reducing discretionary spending and increasing your savings contributions.";
+
+}
+
+else if (savingsRate >= 20) {
+
+  nudgeTitle = "🎉 Great Job";
+
+  nudgeText =
+    "You're saving more than 20% of your income. This is considered a strong savings habit.";
+
+}
+
+else if (highestExpense[0] === "Transport") {
+
+  nudgeTitle = "🚗 Transport Alert";
+
+  nudgeText =
+    "Transport is currently your largest expense category. Consider reviewing commuting costs if you want to improve savings.";
+
+}
+
+else {
+
+  nudgeTitle = "💡 Financial Nudge";
+
+  nudgeText =
+    "Your finances appear balanced. Continue tracking your spending and look for opportunities to increase your savings rate.";
+
+}
 
   return (
     <div className="dashboard">
@@ -140,8 +191,35 @@ export default function Dashboard() {
           <strong>Savings:</strong> {savingsRate}%
         </div>
 
-      </div>
+        <div className="summary-card">
+  
+  <strong>Disposable Income:</strong>
+  <br />
+  R{formatMoney(disposableIncome)}
+</div>
 
+<div className="summary-card">
+  <strong>Debt-to-Income:</strong>
+  <br />
+  {debtToIncome}%
+</div>
+
+      </div>
+{showNudge && expensesConfirmed && (
+  <div className="nudge-card">
+
+    <button
+      className="nudge-close"
+      onClick={() => setShowNudge(false)}
+    >
+      ✕
+    </button>
+<h3>{nudgeTitle}</h3>
+
+<p>{nudgeText}</p>
+    
+  </div>
+)}
       
       {showExpenses && (
         <div className="dropdown">
@@ -156,17 +234,43 @@ export default function Dashboard() {
                 <p className="expense-examples">
                   e.g. {expenseInfo[key].examples}
                 </p>
+
+               
               </div>
 
               <input
   className="expense-input"
   type="number"
   placeholder="0"
-  value={expenses[key] === 0 ? "" : expenses[key]}
+  value={tempExpenses[key] === 0 ? "" : tempExpenses[key]}
   onChange={(e) => updateExpense(key, e.target.value)}
 />
             </div>
           ))}
+
+           <button
+  className="confirm-expenses-btn"
+  onClick={() => {
+
+  setShowNudge(false);
+
+  setTimeout(() => {
+
+    setExpenses(tempExpenses);
+
+    setExpensesConfirmed(true);
+
+    setShowNudge(true);
+
+    setShowExpenses(false);
+
+  }, 0);
+
+
+}}
+>
+  📊 Update Dashboard
+</button>
         </div>
       )}
 
@@ -219,6 +323,9 @@ export default function Dashboard() {
                   {key}: R{formatMoney(value)}
                 </p>
               ))}
+
+
+
             </div>
 
           </div>

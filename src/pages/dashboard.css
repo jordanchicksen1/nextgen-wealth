@@ -198,6 +198,60 @@ hr {
   opacity: 1;
 }
 
+.nudge-card {
+  position: relative;
+
+  margin-bottom: 15px;
+  padding: 15px;
+
+  background: rgba(255, 255, 255, 0.35);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  border-radius: 16px;
+
+  border: 1px solid rgba(255, 255, 255, 0.4);
+
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.nudge-close {
+  position: absolute;
+
+  top: 10px;
+  right: 10px;
+
+  border: none;
+  background: none;
+
+  cursor: pointer;
+
+  font-size: 16px;
+}
+
+.confirm-expenses-btn {
+  width: 100%;
+
+  margin-top: 15px;
+  padding: 12px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: #3b5bdb;
+  color: white;
+
+  font-size: 15px;
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.confirm-expenses-btn:hover {
+  background: #2f4bc7;
+}
+
 /* MOBILE RESPONSIVENESS */
 @media (max-width: 768px) {
 
