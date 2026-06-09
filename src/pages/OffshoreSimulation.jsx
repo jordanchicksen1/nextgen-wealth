@@ -20,6 +20,7 @@ export default function OffshoreSimulation() {
   const [offshoreRate, setOffshoreRate] = useState(12);
 
   const [calculated, setCalculated] = useState(false);
+  const [activeTip, setActiveTip] = useState(null);
 
   const localData = [];
   const offshoreData = [];
@@ -63,7 +64,31 @@ export default function OffshoreSimulation() {
           </div>
 
           <div className="input-row">
-            <span>Monthly Investment</span>
+            <div className="tooltip-wrapper">
+
+  <span>Monthly Investment</span>
+
+  <button
+    className="tooltip-icon"
+    onClick={() =>
+      setActiveTip(
+        activeTip === "investment"
+          ? null
+          : "investment"
+      )
+    }
+  >
+    ?
+  </button>
+
+  {activeTip === "investment" && (
+    <div className="tooltip-box">
+      The amount you plan to invest
+      every month into your portfolio.
+    </div>
+  )}
+
+</div>
             <input
               value={investment || ""}
               onChange={(e) =>
@@ -73,7 +98,32 @@ export default function OffshoreSimulation() {
           </div>
 
           <div className="input-row">
-            <span>Years</span>
+            <div className="tooltip-wrapper">
+
+  <span>Years</span>
+
+  <button
+    className="tooltip-icon"
+    onClick={() =>
+      setActiveTip(
+        activeTip === "years"
+          ? null
+          : "years"
+      )
+    }
+  >
+    ?
+  </button>
+
+  {activeTip === "years" && (
+    <div className="tooltip-box">
+      The investment period over
+      which you want to compare
+      local and offshore investing.
+    </div>
+  )}
+
+</div>
             <input
               value={years || ""}
               onChange={(e) =>
@@ -83,7 +133,34 @@ export default function OffshoreSimulation() {
           </div>
 
           <div className="input-row">
-            <span>Local Return %</span>
+            <div className="tooltip-wrapper">
+
+  <span>Local Return %</span>
+
+  <button
+    className="tooltip-icon"
+    onClick={() =>
+      setActiveTip(
+        activeTip === "local"
+          ? null
+          : "local"
+      )
+    }
+  >
+    ?
+  </button>
+
+  {activeTip === "local" && (
+    <div className="tooltip-box">
+      The estimated annual return
+      from South African investments.
+      Historically, diversified local
+      portfolios have often achieved
+      around 8–12% per year.
+    </div>
+  )}
+
+</div>
             <input
               value={localRate || ""}
               onChange={(e) =>
@@ -93,7 +170,34 @@ export default function OffshoreSimulation() {
           </div>
 
           <div className="input-row">
-            <span>Offshore Return %</span>
+            <div className="tooltip-wrapper">
+
+  <span>Offshore Return %</span>
+
+  <button
+    className="tooltip-icon"
+    onClick={() =>
+      setActiveTip(
+        activeTip === "offshore"
+          ? null
+          : "offshore"
+      )
+    }
+  >
+    ?
+  </button>
+
+  {activeTip === "offshore" && (
+    <div className="tooltip-box">
+      The estimated annual return
+      from international investments.
+      Offshore investing may provide
+      additional diversification and
+      exposure to global markets.
+    </div>
+  )}
+
+</div>
             <input
               value={offshoreRate || ""}
               onChange={(e) =>

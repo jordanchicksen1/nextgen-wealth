@@ -111,7 +111,32 @@ export default function Simulation() {
           <div className="card-header">Input</div>
 
           <div className="input-row">
-            <span>Income</span>
+            <div className="tooltip-wrapper">
+
+  <span>Income</span>
+
+  <button
+    className="tooltip-icon"
+    onClick={() =>
+      setActiveTip(
+        activeTip === "income"
+          ? null
+          : "income"
+      )
+    }
+  >
+    ?
+  </button>
+
+  {activeTip === "income" && (
+    <div className="tooltip-box">
+      Your monthly income from the
+      Profile page. This is used to
+      calculate affordability.
+    </div>
+  )}
+
+</div>
               <input value={income === 0 ? "" : income}
                 disabled
               />
@@ -139,7 +164,32 @@ export default function Simulation() {
           </div>
 
           <div className="input-row">
-            <span>Monthly payment</span>
+            <div className="tooltip-wrapper">
+
+  <span>Monthly Payment</span>
+
+  <button
+    className="tooltip-icon"
+    onClick={() =>
+      setActiveTip(
+        activeTip === "monthlyPayment"
+          ? null
+          : "monthlyPayment"
+      )
+    }
+  >
+    ?
+  </button>
+
+  {activeTip === "monthlyPayment" && (
+    <div className="tooltip-box">
+      The monthly amount you expect
+      to pay towards financing the
+      vehicle.
+    </div>
+  )}
+
+</div>
             <input
               className={errors.monthlyPayment ? "input-error" : ""}
               value={monthlyPayment === 0 ? "" : monthlyPayment}
@@ -150,7 +200,32 @@ export default function Simulation() {
           </div>
 
           <div className="input-row">
-            <span>Investment (pm)</span>
+            <div className="tooltip-wrapper">
+
+  <span>Investment (pm)</span>
+
+  <button
+    className="tooltip-icon"
+    onClick={() =>
+      setActiveTip(
+        activeTip === "investment"
+          ? null
+          : "investment"
+      )
+    }
+  >
+    ?
+  </button>
+
+  {activeTip === "investment" && (
+    <div className="tooltip-box">
+      The amount you would invest
+      each month instead of spending
+      it on the car.
+    </div>
+  )}
+
+</div>
             <input
               className={errors.investment ? "input-error" : ""}
               value={investment === 0 ? "" : investment}
@@ -159,7 +234,32 @@ export default function Simulation() {
           </div>
 
           <div className="input-row">
-            <span>Time</span>
+            <div className="tooltip-wrapper">
+
+  <span>Years</span>
+
+  <button
+    className="tooltip-icon"
+    onClick={() =>
+      setActiveTip(
+        activeTip === "time"
+          ? null
+          : "time"
+      )
+    }
+  >
+    ?
+  </button>
+
+  {activeTip === "time" && (
+    <div className="tooltip-box">
+      The number of years over which
+      you want to compare buying the
+      car versus investing.
+    </div>
+  )}
+
+</div>
             <input
               className={errors.years ? "input-error" : ""}
               value={years === 0 ? "" : years}
