@@ -63,6 +63,11 @@ export default function TracksOverview() {
           <div className="track-icon">🏠</div>
           <div className="card-header">Property First</div>
           <p>Focus on securing a property early</p>
+
+<p>
+  <strong>Best For:</strong>
+  First-time home buyers and long-term planners.
+</p>
           <button>Select</button>
         </Link>
 
@@ -70,6 +75,11 @@ export default function TracksOverview() {
           <div className="track-icon">⚖️</div>
           <div className="card-header">Balanced Lifestyle</div>
           <p>Live a moderate lifestyle whilst saving</p>
+
+<p>
+  <strong>Best For:</strong>
+  Professionals seeking balance between lifestyle and investing.
+</p>
           <button>Select</button>
         </Link>
 
@@ -77,6 +87,11 @@ export default function TracksOverview() {
           <div className="track-icon">🌍</div>
           <div className="card-header">Global Wealth</div>
           <p>Build wealth through global investments</p>
+
+<p>
+  <strong>Best For:</strong>
+  Investors with high risk tolerance and long-term horizons.
+</p>
           <button>Select</button>
         </Link>
 
