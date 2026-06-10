@@ -13,6 +13,7 @@ export function FinancialProvider({ children }) {
     Groceries: 0,
     Utilities: 0,
     Transport: 0,
+    Debt: 0,
   });
 
   const [riskTolerance, setRiskTolerance] = useState(localStorage.getItem("riskTolerance") || "Moderate");

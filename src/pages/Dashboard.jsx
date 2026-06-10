@@ -45,7 +45,7 @@ export default function Dashboard() {
 },
   };
 
-  const COLORS = ["#3b5bdb", "#22c55e", "#f59e0b", "#ef4444"];
+  const COLORS = ["#3b5bdb", "#22c55e", "#f59e0b", "#ef4444", "#8A00c4"];
 
   useEffect(() => {
   setTempExpenses(expenses);
@@ -118,6 +118,16 @@ if (savingsRate < 10) {
     "Your savings rate is below 10%. Consider reducing discretionary spending and increasing your savings contributions.";
 
 }
+
+else if (debtToIncome > 40) {
+
+  nudgeTitle = "⚠️ Debt Alert";
+
+  nudgeText =
+    "Your Debt-to-Income ratio is above 40%. Banks often use this metric when assessing affordability. Lower ratios generally indicate healthier finances and greater borrowing flexibility.";
+
+}
+
 
 else if (savingsRate >= 20) {
 
@@ -269,7 +279,7 @@ else {
 
 }}
 >
-  📊 Update Dashboard
+  Update Dashboard
 </button>
         </div>
       )}
