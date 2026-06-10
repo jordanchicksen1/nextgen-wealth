@@ -333,6 +333,48 @@ li {
   line-height: 1.5;
 }
 
+.callout-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.callout {
+  padding: 14px 16px;
+
+  border-radius: 14px;
+
+  backdrop-filter: blur(12px);
+
+  transition: 0.2s ease;
+
+  line-height: 1.5;
+
+  font-weight: 500;
+}
+
+.callout:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.08);
+}
+
+.tradeoff-callout {
+  background:
+    rgba(246, 59, 59, 0.12);
+
+  
+}
+
+.warning-callout {
+  background:
+    rgba(245, 158, 11, 0.12);
+
+  
+}
+
+
 
 @keyframes fall {
   to {

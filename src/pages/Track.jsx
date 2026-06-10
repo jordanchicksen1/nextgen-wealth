@@ -212,6 +212,7 @@ timeline: [
               }}
             />
           ))}
+
         </div>
       )}
 
@@ -326,6 +327,8 @@ timeline: [
           </div>
         </div>
       ))}
+
+
     </div>
 
   </div>
@@ -341,11 +344,20 @@ timeline: [
         Trade-Offs
       </div>
 
-      <ul>
-        {track.tradeOffs.map((item, i) => (
-          <li key={i}>{item}</li>
-        ))}
-      </ul>
+      <div className="callout-list">
+
+  {track.tradeOffs.map((item, i) => (
+
+    <div
+      key={i}
+      className="callout tradeoff-callout"
+    >
+      💸 {item}
+    </div>
+
+  ))}
+
+</div>
     </div>
 
     <div className="big-card">
@@ -353,11 +365,20 @@ timeline: [
         Warnings
       </div>
 
-      <ul>
-        {track.warnings.map((item, i) => (
-          <li key={i}>⚠️ {item}</li>
-        ))}
-      </ul>
+      <div className="callout-list">
+
+  {track.warnings.map((item, i) => (
+
+    <div
+      key={i}
+      className="callout warning-callout"
+    >
+      ⚠️ {item}
+    </div>
+
+  ))}
+
+</div>
     </div>
 
   </div>
